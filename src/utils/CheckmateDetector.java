@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+import static models.Board.BOARD_DIMENSION;
+
 
 /**
  * Component of the Chess game that detects check mates in the game.
@@ -53,8 +55,8 @@ public class CheckmateDetector {
         Square[][] gameBoard = board.getSquareArray();
 
         // add all squares to squares list and as hashmap keys
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < BOARD_DIMENSION; x++) {
+            for (int y = 0; y < BOARD_DIMENSION; y++) {
                 squares.add(gameBoard[y][x]);
                 whiteMoves.put(gameBoard[y][x], new LinkedList<Piece>());
                 blackMoves.put(gameBoard[y][x], new LinkedList<Piece>());

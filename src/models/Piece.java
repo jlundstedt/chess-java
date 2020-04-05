@@ -1,5 +1,7 @@
 package models;
 
+import utils.ImageFileName;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -9,17 +11,19 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import static models.Board.BOARD_DIMENSION;
+
 public abstract class Piece {
     private final int color;
     private Square currentSquare;
     private BufferedImage image;
 
-    public Piece(int color, Square initialSquare, String imageFile) {
+    public Piece(int color, Square initialSquare, ImageFileName imageFile) {
         this.color = color;
         this.currentSquare = initialSquare;
 
         try {
-            this.image = ImageIO.read(getClass().getResource(imageFile));
+            this.image = ImageIO.read(getClass().getResource(imageFile.getFileName()));
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
         }
@@ -131,7 +135,7 @@ public abstract class Piece {
             }
         }
 
-        while (xSW >= 0 && ySW < 8) {
+        while (xSW >= 0 && ySW < BOARD_DIMENSION) {
             if (board[ySW][xSW].isOccupied()) {
                 if (board[ySW][xSW].getOccupyingPiece().getColor() == this.color) {
                     break;
@@ -146,7 +150,7 @@ public abstract class Piece {
             }
         }
 
-        while (xSE < 8 && ySE < 8) {
+        while (xSE < BOARD_DIMENSION && ySE < BOARD_DIMENSION) {
             if (board[ySE][xSE].isOccupied()) {
                 if (board[ySE][xSE].getOccupyingPiece().getColor() == this.color) {
                     break;
@@ -161,7 +165,7 @@ public abstract class Piece {
             }
         }
 
-        while (xNE < 8 && yNE >= 0) {
+        while (xNE < BOARD_DIMENSION && yNE >= 0) {
             if (board[yNE][xNE].isOccupied()) {
                 if (board[yNE][xNE].getOccupyingPiece().getColor() == this.color) {
                     break;

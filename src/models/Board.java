@@ -16,22 +16,15 @@ import java.util.List;
 
 import javax.swing.*;
 
+import static utils.ImageFileName.*;
+
 @SuppressWarnings("serial")
 public class Board extends JPanel implements MouseListener, MouseMotionListener {
+    public static final int DIMENSION_SIZE = 400;
+    public static final int BOARD_DIMENSION = 8;
+    public static final int NUMBER_OF_PLAYERS = 2;
+    public static final int COORDINATE_ADJUSTMENT = 24;
     // Resource location constants for piece images
-    private static final String RESOURCES_WBISHOP_PNG = "wbishop.png";
-    private static final String RESOURCES_BBISHOP_PNG = "bbishop.png";
-    private static final String RESOURCES_WKNIGHT_PNG = "wknight.png";
-    private static final String RESOURCES_BKNIGHT_PNG = "bknight.png";
-    private static final String RESOURCES_WROOK_PNG = "wrook.png";
-    private static final String RESOURCES_BROOK_PNG = "brook.png";
-    private static final String RESOURCES_WKING_PNG = "wking.png";
-    private static final String RESOURCES_BKING_PNG = "bking.png";
-    private static final String RESOURCES_BQUEEN_PNG = "bqueen.png";
-    private static final String RESOURCES_WQUEEN_PNG = "wqueen.png";
-    private static final String RESOURCES_WPAWN_PNG = "wpawn.png";
-    private static final String RESOURCES_BPAWN_PNG = "bpawn.png";
-
 
     // Logical and graphical representations of board
     private final Square[][] board;
@@ -51,18 +44,18 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
     public Board(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
-        board = new Square[8][8];
+        board = new Square[BOARD_DIMENSION][BOARD_DIMENSION];
         blackPieces = new LinkedList<>();
         whitePieces = new LinkedList<>();
-        setLayout(new GridLayout(8, 8, 0, 0));
+        setLayout(new GridLayout(BOARD_DIMENSION, BOARD_DIMENSION, 0, 0));
 
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
 
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                int xMod = x % 2;
-                int yMod = y % 2;
+        for (int x = 0; x < BOARD_DIMENSION; x++) {
+            for (int y = 0; y < BOARD_DIMENSION; y++) {
+                int xMod = x % NUMBER_OF_PLAYERS;
+                int yMod = y % NUMBER_OF_PLAYERS;
 
                 if ((xMod == 0 && yMod == 0) || (xMod == 1 && yMod == 1)) {
                     board[x][y] = new Square(this, 1, y, x);
@@ -76,54 +69,52 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
         initializePieces();
 
-        this.setPreferredSize(new Dimension(400, 400));
-        this.setMaximumSize(new Dimension(400, 400));
+        this.setPreferredSize(new Dimension(DIMENSION_SIZE, DIMENSION_SIZE));
+        this.setMaximumSize(new Dimension(DIMENSION_SIZE, DIMENSION_SIZE));
         this.setMinimumSize(this.getPreferredSize());
-        this.setSize(new Dimension(400, 400));
+        this.setSize(new Dimension(DIMENSION_SIZE, DIMENSION_SIZE));
 
         whiteTurn = true;
-
     }
 
     private void initializePieces() {
-
-        for (int x = 0; x < 8; x++) {
-            board[1][x].put(new Pawn(0, board[1][x], RESOURCES_BPAWN_PNG));
-            board[6][x].put(new Pawn(1, board[6][x], RESOURCES_WPAWN_PNG));
+        for (int x = 0; x < BOARD_DIMENSION; x++) {
+            board[1][x].put(new Pawn(0, board[1][x], BPAWN_PNG));
+            board[6][x].put(new Pawn(1, board[6][x], WPAWN_PNG));
         }
 
-        board[7][3].put(new Queen(1, board[7][3], RESOURCES_WQUEEN_PNG));
-        board[0][3].put(new Queen(0, board[0][3], RESOURCES_BQUEEN_PNG));
+        board[7][3].put(new Queen(1, board[7][3], WQUEEN_PNG));
+        board[0][3].put(new Queen(0, board[0][3], BQUEEN_PNG));
 
-        King bk = new King(0, board[0][4], RESOURCES_BKING_PNG);
-        King wk = new King(1, board[7][4], RESOURCES_WKING_PNG);
-        board[0][4].put(bk);
-        board[7][4].put(wk);
+        King blackKing = new King(0, board[0][4], BKING_PNG);
+        King whiteKing = new King(1, board[7][4], WKING_PNG);
+        board[0][4].put(blackKing);
+        board[7][4].put(whiteKing);
 
-        board[0][0].put(new Rook(0, board[0][0], RESOURCES_BROOK_PNG));
-        board[0][7].put(new Rook(0, board[0][7], RESOURCES_BROOK_PNG));
-        board[7][0].put(new Rook(1, board[7][0], RESOURCES_WROOK_PNG));
-        board[7][7].put(new Rook(1, board[7][7], RESOURCES_WROOK_PNG));
+        board[0][0].put(new Rook(0, board[0][0], BROOK_PNG));
+        board[0][7].put(new Rook(0, board[0][7], BROOK_PNG));
+        board[7][0].put(new Rook(1, board[7][0], WROOK_PNG));
+        board[7][7].put(new Rook(1, board[7][7], WROOK_PNG));
 
-        board[0][1].put(new Knight(0, board[0][1], RESOURCES_BKNIGHT_PNG));
-        board[0][6].put(new Knight(0, board[0][6], RESOURCES_BKNIGHT_PNG));
-        board[7][1].put(new Knight(1, board[7][1], RESOURCES_WKNIGHT_PNG));
-        board[7][6].put(new Knight(1, board[7][6], RESOURCES_WKNIGHT_PNG));
+        board[0][1].put(new Knight(0, board[0][1], BKNIGHT_PNG));
+        board[0][6].put(new Knight(0, board[0][6], BKNIGHT_PNG));
+        board[7][1].put(new Knight(1, board[7][1], WKNIGHT_PNG));
+        board[7][6].put(new Knight(1, board[7][6], WKNIGHT_PNG));
 
-        board[0][2].put(new Bishop(0, board[0][2], RESOURCES_BBISHOP_PNG));
-        board[0][5].put(new Bishop(0, board[0][5], RESOURCES_BBISHOP_PNG));
-        board[7][2].put(new Bishop(1, board[7][2], RESOURCES_WBISHOP_PNG));
-        board[7][5].put(new Bishop(1, board[7][5], RESOURCES_WBISHOP_PNG));
+        board[0][2].put(new Bishop(0, board[0][2], BBISHOP_PNG));
+        board[0][5].put(new Bishop(0, board[0][5], BBISHOP_PNG));
+        board[7][2].put(new Bishop(1, board[7][2], WBISHOP_PNG));
+        board[7][5].put(new Bishop(1, board[7][5], WBISHOP_PNG));
 
 
-        for (int y = 0; y < 2; y++) {
-            for (int x = 0; x < 8; x++) {
+        for (int y = 0; y < NUMBER_OF_PLAYERS; y++) {
+            for (int x = 0; x < BOARD_DIMENSION; x++) {
                 blackPieces.add(board[y][x].getOccupyingPiece());
                 whitePieces.add(board[7 - y][x].getOccupyingPiece());
             }
         }
 
-        checkmateDetector = new CheckmateDetector(this, whitePieces, blackPieces, wk, bk);
+        checkmateDetector = new CheckmateDetector(this, whitePieces, blackPieces, whiteKing, blackKing);
     }
 
     public Square[][] getSquareArray() {
@@ -135,11 +126,11 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     }
 
     @Override
-    public void paintComponent(Graphics g) {
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                Square sq = board[y][x];
-                sq.paintComponent(g);
+    public void paintComponent(Graphics graphics) {
+        for (int x = 0; x < BOARD_DIMENSION; x++) {
+            for (int y = 0; y < BOARD_DIMENSION; y++) {
+                Square square = board[y][x];
+                square.paintComponent(graphics);
             }
         }
 
@@ -147,7 +138,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
             if ((currentPiece.getColor() == 1 && whiteTurn)
                     || (currentPiece.getColor() == 0 && !whiteTurn)) {
                 final Image i = currentPiece.getImage();
-                g.drawImage(i, currentX, currentY, null);
+                graphics.drawImage(i, currentX, currentY, null);
             }
         }
     }
@@ -218,8 +209,8 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-        currentX = mouseEvent.getX() - 24;
-        currentY = mouseEvent.getY() - 24;
+        currentX = mouseEvent.getX() - COORDINATE_ADJUSTMENT;
+        currentY = mouseEvent.getY() - COORDINATE_ADJUSTMENT;
 
         repaint();
     }

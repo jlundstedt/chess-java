@@ -1,11 +1,13 @@
 package models;
 
+import utils.ImageFileName;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class Queen extends Piece {
 
-    Queen(int color, Square initialSquare, String imageFile) {
+    Queen(int color, Square initialSquare, ImageFileName imageFile) {
         super(color, initialSquare, imageFile);
     }
 

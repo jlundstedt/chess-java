@@ -1,11 +1,13 @@
 package models;
 
+import utils.ImageFileName;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class Rook extends Piece {
 
-    Rook(int color, Square initialSquare, String imageFile) {
+    Rook(int color, Square initialSquare, ImageFileName imageFile) {
         super(color, initialSquare, imageFile);
     }
 

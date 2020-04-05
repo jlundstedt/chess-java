@@ -1,10 +1,12 @@
 package models;
 
+import utils.ImageFileName;
+
 import java.util.List;
 
 public class Bishop extends Piece {
 
-    Bishop(int color, Square initialSquare, String imageFile) {
+    Bishop(int color, Square initialSquare, ImageFileName imageFile) {
         super(color, initialSquare, imageFile);
     }
 
