@@ -12,31 +12,31 @@ import javax.imageio.ImageIO;
 public abstract class Piece {
     private final int color;
     private Square currentSquare;
-    private BufferedImage img;
+    private BufferedImage image;
     
-    public Piece(int color, Square initSq, String img_file) {
+    public Piece(int color, Square initialSquare, String imageFile) {
         this.color = color;
-        this.currentSquare = initSq;
+        this.currentSquare = initialSquare;
         
         try {
-            if (this.img == null) {
-              this.img = ImageIO.read(getClass().getResource(img_file));
-            }
-          } catch (IOException e) {
+            this.image = ImageIO.read(getClass().getResource(imageFile));
+        } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
           }
     }
     
-    public boolean move(Square fin) {
-        Piece occup = fin.getOccupyingPiece();
+    public boolean canMove(Square square) {
+        Piece occupyingPiece = square.getOccupyingPiece();
         
-        if (occup != null) {
-            if (occup.getColor() == this.color) return false;
-            else fin.capture(this);
+        if (occupyingPiece != null) {
+            if (occupyingPiece.getColor() == this.color){
+                return false;
+            }
+            else square.capture(this);
         }
         
         currentSquare.removePiece();
-        this.currentSquare = fin;
+        this.currentSquare = square;
         currentSquare.put(this);
         return true;
     }
@@ -45,31 +45,31 @@ public abstract class Piece {
         return currentSquare;
     }
     
-    public void setPosition(Square sq) {
-        this.currentSquare = sq;
+    void setPosition(Square square) {
+        this.currentSquare = square;
     }
     
     public int getColor() {
         return color;
     }
     
-    public Image getImage() {
-        return img;
+    Image getImage() {
+        return image;
     }
     
-    public void draw(Graphics g) {
+    void draw(Graphics graphics) {
         int x = currentSquare.getX();
         int y = currentSquare.getY();
         
-        g.drawImage(this.img, x, y, null);
+        graphics.drawImage(this.image, x, y, null);
     }
     
-    public int[] getLinearOccupations(Square[][] board, int x, int y) {
+    int[] getLinearOccupations(Square[][] board, int x, int y) {
         int lastYabove = 0;
         int lastXright = 7;
         int lastYbelow = 7;
         int lastXleft = 0;
-        
+
         for (int i = 0; i < y; i++) {
             if (board[i][x].isOccupied()) {
                 if (board[i][x].getOccupyingPiece().getColor() != this.color) {
@@ -101,14 +101,12 @@ public abstract class Piece {
                 } else lastXright = i - 1;
             }
         }
-        
-        int[] occups = {lastYabove, lastYbelow, lastXleft, lastXright};
-        
-        return occups;
+
+        return new int[]{lastYabove, lastYbelow, lastXleft, lastXright};
     }
-    
-    public List<Square> getDiagonalOccupations(Square[][] board, int x, int y) {
-        LinkedList<Square> diagOccup = new LinkedList<Square>();
+
+    List<Square> getDiagonalOccupations(Square[][] board, int x, int y) {
+        LinkedList<Square> diagonalOccupations = new LinkedList<>();
         
         int xNW = x - 1;
         int xSW = x - 1;
@@ -118,32 +116,32 @@ public abstract class Piece {
         int ySW = y + 1;
         int yNE = y - 1;
         int ySE = y + 1;
-        
+
         while (xNW >= 0 && yNW >= 0) {
             if (board[yNW][xNW].isOccupied()) {
                 if (board[yNW][xNW].getOccupyingPiece().getColor() == this.color) {
                     break;
                 } else {
-                    diagOccup.add(board[yNW][xNW]);
+                    diagonalOccupations.add(board[yNW][xNW]);
                     break;
                 }
             } else {
-                diagOccup.add(board[yNW][xNW]);
+                diagonalOccupations.add(board[yNW][xNW]);
                 yNW--;
                 xNW--;
             }
         }
-        
+
         while (xSW >= 0 && ySW < 8) {
             if (board[ySW][xSW].isOccupied()) {
                 if (board[ySW][xSW].getOccupyingPiece().getColor() == this.color) {
                     break;
                 } else {
-                    diagOccup.add(board[ySW][xSW]);
+                    diagonalOccupations.add(board[ySW][xSW]);
                     break;
                 }
             } else {
-                diagOccup.add(board[ySW][xSW]);
+                diagonalOccupations.add(board[ySW][xSW]);
                 ySW++;
                 xSW--;
             }
@@ -154,11 +152,11 @@ public abstract class Piece {
                 if (board[ySE][xSE].getOccupyingPiece().getColor() == this.color) {
                     break;
                 } else {
-                    diagOccup.add(board[ySE][xSE]);
+                    diagonalOccupations.add(board[ySE][xSE]);
                     break;
                 }
             } else {
-                diagOccup.add(board[ySE][xSE]);
+                diagonalOccupations.add(board[ySE][xSE]);
                 ySE++;
                 xSE++;
             }
@@ -169,19 +167,19 @@ public abstract class Piece {
                 if (board[yNE][xNE].getOccupyingPiece().getColor() == this.color) {
                     break;
                 } else {
-                    diagOccup.add(board[yNE][xNE]);
+                    diagonalOccupations.add(board[yNE][xNE]);
                     break;
                 }
             } else {
-                diagOccup.add(board[yNE][xNE]);
+                diagonalOccupations.add(board[yNE][xNE]);
                 yNE--;
                 xNE++;
             }
         }
         
-        return diagOccup;
+        return diagonalOccupations;
     }
-    
+
     // No implementation, to be implemented by each subclass
-    public abstract List<Square> getLegalMoves(Board b);
+    public abstract List<Square> getLegalMoves(Board board);
 }

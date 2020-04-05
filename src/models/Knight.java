@@ -5,14 +5,14 @@ import java.util.List;
 
 public class Knight extends Piece {
 
-    public Knight(int color, Square initSq, String img_file) {
-        super(color, initSq, img_file);
+    public Knight(int color, Square initialSquare, String imageFile) {
+        super(color, initialSquare, imageFile);
     }
 
     @Override
-    public List<Square> getLegalMoves(Board b) {
+    public List<Square> getLegalMoves(Board board) {
         LinkedList<Square> legalMoves = new LinkedList<Square>();
-        Square[][] board = b.getSquareArray();
+        Square[][] gameBoard = board.getSquareArray();
         
         int x = this.getPosition().getXNum();
         int y = this.getPosition().getYNum();
@@ -22,7 +22,7 @@ public class Knight extends Piece {
                 if(Math.abs(i) == 2 ^ Math.abs(k) == 2) {
                     if (k != 0 && i != 0) {
                         try {
-                            legalMoves.add(board[y + k][x + i]);
+                            legalMoves.add(gameBoard[y + k][x + i]);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             continue;
                         }
