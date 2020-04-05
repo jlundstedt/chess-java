@@ -8,83 +8,83 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class Square extends JComponent {
     private Board board;
-    
+
     private final int color;
     private Piece occupyingPiece;
     private boolean willDisplayPiece;
-    
+
     private int xCoordinate;
     private int yCoordinate;
-    
+
     public Square(Board board, int color, int xCoordinate, int yCoordinate) {
-        
+
         this.board = board;
         this.color = color;
         this.willDisplayPiece = true;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        
+
         this.setBorder(BorderFactory.createEmptyBorder());
     }
-    
+
     public int getColor() {
         return this.color;
     }
-    
+
     public Piece getOccupyingPiece() {
         return occupyingPiece;
     }
-    
+
     public boolean isOccupied() {
         return (this.occupyingPiece != null);
     }
-    
+
     public int getXNum() {
         return this.xCoordinate;
     }
-    
+
     public int getYNum() {
         return this.yCoordinate;
     }
-    
+
     public void setDisplay(boolean display) {
         this.willDisplayPiece = display;
     }
-    
+
     public void put(Piece piece) {
         this.occupyingPiece = piece;
         piece.setPosition(this);
     }
-    
+
     public Piece removePiece() {
         Piece occupyingPiece = this.occupyingPiece;
         this.occupyingPiece = null;
         return occupyingPiece;
     }
-    
+
     public void capture(Piece piece) {
         Piece k = getOccupyingPiece();
         if (k.getColor() == 0) board.blackPieces.remove(k);
         if (k.getColor() == 1) board.whitePieces.remove(k);
         this.occupyingPiece = piece;
     }
-    
+
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        
+
         if (this.color == 1) {
-            graphics.setColor(new Color(221,192,127));
+            graphics.setColor(new Color(221, 192, 127));
         } else {
-            graphics.setColor(new Color(101,67,33));
+            graphics.setColor(new Color(101, 67, 33));
         }
-        
+
         graphics.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        
-        if(occupyingPiece != null && willDisplayPiece) {
+
+        if (occupyingPiece != null && willDisplayPiece) {
             occupyingPiece.draw(graphics);
         }
     }
-    
+
     @Override
     public int hashCode() {
         int prime = 31;
@@ -93,5 +93,5 @@ public class Square extends JComponent {
         result = prime * result + yCoordinate;
         return result;
     }
-    
+
 }

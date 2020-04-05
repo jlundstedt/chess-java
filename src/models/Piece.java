@@ -13,57 +13,56 @@ public abstract class Piece {
     private final int color;
     private Square currentSquare;
     private BufferedImage image;
-    
+
     public Piece(int color, Square initialSquare, String imageFile) {
         this.color = color;
         this.currentSquare = initialSquare;
-        
+
         try {
             this.image = ImageIO.read(getClass().getResource(imageFile));
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
-          }
+        }
     }
-    
+
     public boolean canMove(Square square) {
         Piece occupyingPiece = square.getOccupyingPiece();
-        
+
         if (occupyingPiece != null) {
-            if (occupyingPiece.getColor() == this.color){
+            if (occupyingPiece.getColor() == this.color) {
                 return false;
-            }
-            else square.capture(this);
+            } else square.capture(this);
         }
-        
+
         currentSquare.removePiece();
         this.currentSquare = square;
         currentSquare.put(this);
         return true;
     }
-    
+
     public Square getPosition() {
         return currentSquare;
     }
-    
+
     void setPosition(Square square) {
         this.currentSquare = square;
     }
-    
+
     public int getColor() {
         return color;
     }
-    
+
     Image getImage() {
         return image;
     }
-    
+
     void draw(Graphics graphics) {
         int x = currentSquare.getX();
         int y = currentSquare.getY();
-        
+
         graphics.drawImage(this.image, x, y, null);
     }
-    
+
     int[] getLinearOccupations(Square[][] board, int x, int y) {
         int lastYabove = 0;
         int lastXright = 7;
@@ -107,7 +106,7 @@ public abstract class Piece {
 
     List<Square> getDiagonalOccupations(Square[][] board, int x, int y) {
         LinkedList<Square> diagonalOccupations = new LinkedList<>();
-        
+
         int xNW = x - 1;
         int xSW = x - 1;
         int xNE = x + 1;
@@ -146,7 +145,7 @@ public abstract class Piece {
                 xSW--;
             }
         }
-        
+
         while (xSE < 8 && ySE < 8) {
             if (board[ySE][xSE].isOccupied()) {
                 if (board[ySE][xSE].getOccupyingPiece().getColor() == this.color) {
@@ -161,7 +160,7 @@ public abstract class Piece {
                 xSE++;
             }
         }
-        
+
         while (xNE < 8 && yNE >= 0) {
             if (board[yNE][xNE].isOccupied()) {
                 if (board[yNE][xNE].getOccupyingPiece().getColor() == this.color) {
@@ -176,7 +175,7 @@ public abstract class Piece {
                 xNE++;
             }
         }
-        
+
         return diagonalOccupations;
     }
 
