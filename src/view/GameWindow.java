@@ -1,10 +1,13 @@
+package view;
+
+import models.Board;
+import utils.Clock;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -35,7 +38,7 @@ public class GameWindow {
             Image whiteImg = ImageIO.read(getClass().getResource("wp.png"));
             gameWindow.setIconImage(whiteImg);
         } catch (Exception e) {
-            System.out.println("Game file wp.png not found");
+            System.out.println("controller.Game file wp.png not found");
         }
 
         gameWindow.setLocation(100, 100);
@@ -43,7 +46,7 @@ public class GameWindow {
         
         gameWindow.setLayout(new BorderLayout(20,20));
        
-        // Game Data window
+        // controller.Game Data window
         JPanel gameData = gameDataPanel(blackName, whiteName, hh, mm, ss);
         gameData.setSize(gameData.getPreferredSize());
         gameWindow.add(gameData, BorderLayout.NORTH);

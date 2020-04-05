@@ -1,4 +1,7 @@
+package models;
 
+import utils.CheckmateDetector;
+import view.GameWindow;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -1,3 +1,6 @@
+package controller;
+
+import view.StartMenu;
 
 import javax.swing.*;
 

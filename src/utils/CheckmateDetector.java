@@ -1,4 +1,6 @@
+package utils;
 
+import models.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,14 +28,14 @@ public class CheckmateDetector {
     private HashMap<Square,List<Piece>> bMoves;
     
     /**
-     * Constructs a new instance of CheckmateDetector on a given board. By
+     * Constructs a new instance of utils.CheckmateDetector on a given board. By
      * convention should be called when the board is in its initial state.
      * 
      * @param b The board which the detector monitors
      * @param wPieces White pieces on the board.
      * @param bPieces Black pieces on the board.
-     * @param wk Piece object representing the white king
-     * @param bk Piece object representing the black king
+     * @param wk models.Piece object representing the white king
+     * @param bk models.Piece object representing the black king
      */
     public CheckmateDetector(Board b, LinkedList<Piece> wPieces, 
             LinkedList<Piece> bPieces, King wk, King bk) {
@@ -292,7 +294,7 @@ public class CheckmateDetector {
                 for (int i = min + 1; i < max; i++) {
                     List<Piece> blks = 
                             blockMoves.get(brdArray[ks.getYNum()][i]);
-                    ConcurrentLinkedDeque<Piece> blockers = 
+                    ConcurrentLinkedDeque<Piece> blockers =
                             new ConcurrentLinkedDeque<Piece>();
                     blockers.addAll(blks);
                     
@@ -428,8 +430,8 @@ public class CheckmateDetector {
     /**
      * Tests a move a player is about to make to prevent making an illegal move
      * that puts the player in check.
-     * @param p Piece moved
-     * @param sq Square to which p is about to move
+     * @param p models.Piece moved
+     * @param sq models.Square to which p is about to move
      * @return false if move would cause a check
      */
     public boolean testMove(Piece p, Square sq) {
