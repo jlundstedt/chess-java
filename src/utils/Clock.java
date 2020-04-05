@@ -30,7 +30,6 @@ public class Clock {
         String fHrs = String.format("%02d", this.hh);
         String fMins = String.format("%02d", this.mm);
         String fSecs = String.format("%02d", this.ss);
-        String fTime = fHrs + ":" + fMins + ":" + fSecs;
-        return fTime;
+        return fHrs + ":" + fMins + ":" + fSecs;
     }
 }

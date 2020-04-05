@@ -13,7 +13,7 @@ public class Knight extends Piece {
 
     @Override
     public List<Square> getLegalMoves(Board board) {
-        LinkedList<Square> legalMoves = new LinkedList<Square>();
+        LinkedList<Square> legalMoves = new LinkedList<>();
         Square[][] gameBoard = board.getSquareArray();
 
         int x = this.getPosition().getXNum();
@@ -25,8 +25,7 @@ public class Knight extends Piece {
                     if (k != 0 && i != 0) {
                         try {
                             legalMoves.add(gameBoard[y + k][x + i]);
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            continue;
+                        } catch (ArrayIndexOutOfBoundsException ignored) {
                         }
                     }
                 }

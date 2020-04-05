@@ -16,16 +16,16 @@ import javax.swing.*;
 public class GameWindow {
     private JFrame gameWindow;
 
-    public Clock blackClock;
-    public Clock whiteClock;
+    private Clock blackClock;
+    private Clock whiteClock;
 
     private Timer timer;
 
     private Board board;
 
 
-    public GameWindow(String blackName, String whiteName, int hh,
-                      int mm, int ss) {
+    GameWindow(String blackName, String whiteName, int hh,
+               int mm, int ss) {
 
         blackClock = new Clock(hh, ss, mm);
         whiteClock = new Clock(hh, ss, mm);
@@ -102,46 +102,44 @@ public class GameWindow {
 
         if (!(hh == 0 && mm == 0 && ss == 0)) {
             timer = new Timer(1000, null);
-            timer.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    boolean turn = board.getTurn();
+            timer.addActionListener(e -> {
+                boolean turn = board.getTurn();
 
-                    if (turn) {
-                        whiteClock.decrement();
-                        wTime.setText(whiteClock.getTime());
+                if (turn) {
+                    whiteClock.decrement();
+                    wTime.setText(whiteClock.getTime());
 
-                        if (whiteClock.outOfTime()) {
-                            timer.stop();
-                            int n = JOptionPane.showConfirmDialog(
-                                    gameWindow,
-                                    bn + " wins by time! Play a new game? \n" +
-                                            "Choosing \"No\" quits the game.",
-                                    bn + " wins!",
-                                    JOptionPane.YES_NO_OPTION);
+                    if (whiteClock.outOfTime()) {
+                        timer.stop();
+                        int n = JOptionPane.showConfirmDialog(
+                                gameWindow,
+                                bn + " wins by time! Play a new game? \n" +
+                                        "Choosing \"No\" quits the game.",
+                                bn + " wins!",
+                                JOptionPane.YES_NO_OPTION);
 
-                            if (n == JOptionPane.YES_OPTION) {
-                                new GameWindow(bn, wn, hh, mm, ss);
-                                gameWindow.dispose();
-                            } else gameWindow.dispose();
-                        }
-                    } else {
-                        blackClock.decrement();
-                        bTime.setText(blackClock.getTime());
+                        if (n == JOptionPane.YES_OPTION) {
+                            new GameWindow(bn, wn, hh, mm, ss);
+                            gameWindow.dispose();
+                        } else gameWindow.dispose();
+                    }
+                } else {
+                    blackClock.decrement();
+                    bTime.setText(blackClock.getTime());
 
-                        if (blackClock.outOfTime()) {
-                            timer.stop();
-                            int n = JOptionPane.showConfirmDialog(
-                                    gameWindow,
-                                    wn + " wins by time! Play a new game? \n" +
-                                            "Choosing \"No\" quits the game.",
-                                    wn + " wins!",
-                                    JOptionPane.YES_NO_OPTION);
+                    if (blackClock.outOfTime()) {
+                        timer.stop();
+                        int n = JOptionPane.showConfirmDialog(
+                                gameWindow,
+                                wn + " wins by time! Play a new game? \n" +
+                                        "Choosing \"No\" quits the game.",
+                                wn + " wins!",
+                                JOptionPane.YES_NO_OPTION);
 
-                            if (n == JOptionPane.YES_OPTION) {
-                                new GameWindow(bn, wn, hh, mm, ss);
-                                gameWindow.dispose();
-                            } else gameWindow.dispose();
-                        }
+                        if (n == JOptionPane.YES_OPTION) {
+                            new GameWindow(bn, wn, hh, mm, ss);
+                            gameWindow.dispose();
+                        } else gameWindow.dispose();
                     }
                 }
             });
@@ -165,17 +163,15 @@ public class GameWindow {
 
         final JButton quit = new JButton("Quit");
 
-        quit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int n = JOptionPane.showConfirmDialog(
-                        gameWindow,
-                        "Are you sure you want to quit?",
-                        "Confirm quit", JOptionPane.YES_NO_OPTION);
+        quit.addActionListener(e -> {
+            int n = JOptionPane.showConfirmDialog(
+                    gameWindow,
+                    "Are you sure you want to quit?",
+                    "Confirm quit", JOptionPane.YES_NO_OPTION);
 
-                if (n == JOptionPane.YES_OPTION) {
-                    if (timer != null) timer.stop();
-                    gameWindow.dispose();
-                }
+            if (n == JOptionPane.YES_OPTION) {
+                if (timer != null) timer.stop();
+                gameWindow.dispose();
             }
         });
 
@@ -197,18 +193,14 @@ public class GameWindow {
 
         final JButton instr = new JButton("How to play");
 
-        instr.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(gameWindow,
-                        "Move the chess pieces on the board by clicking\n"
-                                + "and dragging. The game will watch out for illegal\n"
-                                + "moves. You can win either by your opponent running\n"
-                                + "out of time or by checkmating your opponent.\n"
-                                + "\nGood luck, hope you enjoy the game!",
-                        "How to play",
-                        JOptionPane.PLAIN_MESSAGE);
-            }
-        });
+        instr.addActionListener(e -> JOptionPane.showMessageDialog(gameWindow,
+                "Move the chess pieces on the board by clicking\n"
+                        + "and dragging. The game will watch out for illegal\n"
+                        + "moves. You can win either by your opponent running\n"
+                        + "out of time or by checkmating your opponent.\n"
+                        + "\nGood luck, hope you enjoy the game!",
+                "How to play",
+                JOptionPane.PLAIN_MESSAGE));
 
         buttons.add(instr);
         buttons.add(nGame);

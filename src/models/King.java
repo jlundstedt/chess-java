@@ -13,7 +13,7 @@ public class King extends Piece {
 
     @Override
     public List<Square> getLegalMoves(Board board) {
-        LinkedList<Square> legalMoves = new LinkedList<Square>();
+        LinkedList<Square> legalMoves = new LinkedList<>();
 
         Square[][] gameBoard = board.getSquareArray();
 
@@ -29,8 +29,7 @@ public class King extends Piece {
                                         != this.getColor()) {
                             legalMoves.add(gameBoard[y + k][x + i]);
                         }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        continue;
+                    } catch (ArrayIndexOutOfBoundsException ignored) {
                     }
                 }
             }

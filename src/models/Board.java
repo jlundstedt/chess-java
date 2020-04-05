@@ -20,10 +20,10 @@ import static utils.ImageFileName.*;
 
 @SuppressWarnings("serial")
 public class Board extends JPanel implements MouseListener, MouseMotionListener {
-    public static final int DIMENSION_SIZE = 400;
+    private static final int DIMENSION_SIZE = 400;
     public static final int BOARD_DIMENSION = 8;
-    public static final int NUMBER_OF_PLAYERS = 2;
-    public static final int COORDINATE_ADJUSTMENT = 24;
+    private static final int NUMBER_OF_PLAYERS = 2;
+    private static final int COORDINATE_ADJUSTMENT = 24;
     // Resource location constants for piece images
 
     // Logical and graphical representations of board

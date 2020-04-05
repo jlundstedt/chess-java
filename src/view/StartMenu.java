@@ -1,21 +1,9 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
+import java.util.Objects;
 
 public class StartMenu implements Runnable {
     public void run() {
@@ -72,16 +60,16 @@ public class StartMenu implements Runnable {
         final String[] minSecInts = new String[60];
         for (int i = 0; i < 60; i++) {
             if (i < 10) {
-                minSecInts[i] = "0" + Integer.toString(i);
+                minSecInts[i] = "0" + i;
             } else {
                 minSecInts[i] = Integer.toString(i);
             }
         }
 
-        final JComboBox<String> seconds = new JComboBox<String>(minSecInts);
-        final JComboBox<String> minutes = new JComboBox<String>(minSecInts);
+        final JComboBox<String> seconds = new JComboBox<>(minSecInts);
+        final JComboBox<String> minutes = new JComboBox<>(minSecInts);
         final JComboBox<String> hours =
-                new JComboBox<String>(new String[]{"0", "1", "2", "3"});
+                new JComboBox<>(new String[]{"0", "1", "2", "3"});
 
         Box timerSettings = Box.createHorizontalBox();
 
@@ -103,39 +91,29 @@ public class StartMenu implements Runnable {
         Box buttons = Box.createHorizontalBox();
         final JButton quit = new JButton("Quit");
 
-        quit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                startWindow.dispose();
-            }
-        });
+        quit.addActionListener(e -> startWindow.dispose());
 
         final JButton instr = new JButton("Instructions");
 
-        instr.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(startWindow,
-                        "To begin a new game, input player names\n" +
-                                "next to the pieces. Set the clocks and\n" +
-                                "click \"Start\". Setting the timer to all\n" +
-                                "zeroes begins a new untimed game.",
-                        "How to play",
-                        JOptionPane.PLAIN_MESSAGE);
-            }
-        });
+        instr.addActionListener(e -> JOptionPane.showMessageDialog(startWindow,
+                "To begin a new game, input player names\n" +
+                        "next to the pieces. Set the clocks and\n" +
+                        "click \"Start\". Setting the timer to all\n" +
+                        "zeroes begins a new untimed game.",
+                "How to play",
+                JOptionPane.PLAIN_MESSAGE));
 
         final JButton start = new JButton("Start");
 
-        start.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String bn = blackInput.getText();
-                String wn = whiteInput.getText();
-                int hh = Integer.parseInt((String) hours.getSelectedItem());
-                int mm = Integer.parseInt((String) minutes.getSelectedItem());
-                int ss = Integer.parseInt((String) seconds.getSelectedItem());
+        start.addActionListener(e -> {
+            String bn = blackInput.getText();
+            String wn = whiteInput.getText();
+            int hh = Integer.parseInt((String) Objects.requireNonNull(hours.getSelectedItem()));
+            int mm = Integer.parseInt((String) Objects.requireNonNull(minutes.getSelectedItem()));
+            int ss = Integer.parseInt((String) Objects.requireNonNull(seconds.getSelectedItem()));
 
-                new GameWindow(bn, wn, hh, mm, ss);
-                startWindow.dispose();
-            }
+            new GameWindow(bn, wn, hh, mm, ss);
+            startWindow.dispose();
         });
 
         buttons.add(start);

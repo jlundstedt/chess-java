@@ -13,7 +13,7 @@ public class Queen extends Piece {
 
     @Override
     public List<Square> getLegalMoves(Board board) {
-        LinkedList<Square> legalMoves = new LinkedList<Square>();
+        LinkedList<Square> legalMoves = new LinkedList<>();
         Square[][] gameBoard = board.getSquareArray();
 
         int x = this.getPosition().getXNum();
