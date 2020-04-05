@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
-    public Bishop(int color, Square initialSquare, String imageFile) {
+    Bishop(int color, Square initialSquare, String imageFile) {
         super(color, initialSquare, imageFile);
     }
 

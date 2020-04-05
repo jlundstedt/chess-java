@@ -35,7 +35,7 @@ public class Square extends JComponent {
         return occupyingPiece;
     }
 
-    public boolean isOccupied() {
+    boolean isOccupied() {
         return (this.occupyingPiece != null);
     }
 
@@ -47,7 +47,7 @@ public class Square extends JComponent {
         return this.yCoordinate;
     }
 
-    public void setDisplay(boolean display) {
+    void setDisplay(boolean display) {
         this.willDisplayPiece = display;
     }
 
@@ -56,13 +56,11 @@ public class Square extends JComponent {
         piece.setPosition(this);
     }
 
-    public Piece removePiece() {
-        Piece occupyingPiece = this.occupyingPiece;
+    void removePiece() {
         this.occupyingPiece = null;
-        return occupyingPiece;
     }
 
-    public void capture(Piece piece) {
+    void capture(Piece piece) {
         Piece k = getOccupyingPiece();
         if (k.getColor() == 0) board.blackPieces.remove(k);
         if (k.getColor() == 1) board.whitePieces.remove(k);

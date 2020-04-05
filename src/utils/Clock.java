@@ -15,7 +15,7 @@ public class Clock {
         return (hh == 0 && mm == 0 && ss == 0);
     }
 
-    public void decr() {
+    public void decrement() {
         if (this.mm == 0 && this.ss == 0) {
             this.ss = 59;
             this.mm = 59;

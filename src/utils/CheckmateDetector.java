@@ -127,7 +127,7 @@ public class CheckmateDetector {
      *
      * @return boolean representing whether the black king is in check.
      */
-    public boolean blackInCheck() {
+    private boolean blackInCheck() {
         update();
         Square blackKingPosition = blackKing.getPosition();
         if (whiteMoves.get(blackKingPosition).isEmpty()) {
@@ -141,7 +141,7 @@ public class CheckmateDetector {
      *
      * @return boolean representing whether the white king is in check.
      */
-    public boolean whiteInCheck() {
+    private boolean whiteInCheck() {
         update();
         Square whiteKingPosition = whiteKing.getPosition();
         if (blackMoves.get(whiteKingPosition).isEmpty()) {
@@ -418,11 +418,9 @@ public class CheckmateDetector {
      * Defaults to all squares, but limits available squares if player is in
      * check.
      *
-     * @param isWhitePlayersTurn boolean representing whether it's white player's turn (if yes,
-     *                           true)
      * @return List of squares that the player can canMove into.
      */
-    public List<Square> getAllowableSquares(boolean isWhitePlayersTurn) {
+    public List<Square> getAllowableSquares() {
         movableSquares.removeAll(movableSquares);
         if (whiteInCheck()) {
             whiteCheckMated();

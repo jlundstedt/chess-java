@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Rook extends Piece {
 
-    public Rook(int color, Square initialSquare, String imageFile) {
+    Rook(int color, Square initialSquare, String imageFile) {
         super(color, initialSquare, imageFile);
     }
 

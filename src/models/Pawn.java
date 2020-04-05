@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class Pawn extends Piece {
     private boolean wasMoved;
 
-    public Pawn(int color, Square initialSquare, String imageFile) {
+    Pawn(int color, Square initialSquare, String imageFile) {
         super(color, initialSquare, imageFile);
     }
 

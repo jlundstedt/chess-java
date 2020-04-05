@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Knight extends Piece {
 
-    public Knight(int color, Square initialSquare, String imageFile) {
+    Knight(int color, Square initialSquare, String imageFile) {
         super(color, initialSquare, imageFile);
     }
 

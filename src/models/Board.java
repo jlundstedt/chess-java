@@ -181,7 +181,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
                 return;
 
             List<Square> legalMoves = currentPiece.getLegalMoves(this);
-            List<Square> movable = checkmateDetector.getAllowableSquares(whiteTurn);
+            List<Square> movable = checkmateDetector.getAllowableSquares();
 
             if (legalMoves.contains(square) && movable.contains(square)
                     && checkmateDetector.testMove(currentPiece, square)) {
@@ -204,7 +204,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
                 } else {
                     currentPiece = null;
                     whiteTurn = !whiteTurn;
-                    checkmateDetector.getAllowableSquares(whiteTurn);
+                    checkmateDetector.getAllowableSquares();
                 }
 
             } else {
