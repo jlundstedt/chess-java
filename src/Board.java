@@ -58,10 +58,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                int xMod = x % 2;
-                int yMod = y % 2;
-
-                if ((xMod == 0 && yMod == 0) || (xMod == 1 && yMod == 1)) {
+                if(x % 2 == y % 2) {
                     board[x][y] = new Square(this, 1, y, x);
                     this.add(board[x][y]);
                 } else {
